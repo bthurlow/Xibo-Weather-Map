@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 2:53:05 pm
+ * Last Modified: Wednesday, June 2nd 2021, 4:07:17 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -123,11 +123,12 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 	public function settings()
 	{
 		$sanitizedParams = $this->getSanitizer();
+
 		// Process any module settings you asked for.
 		$owmApiKey = $sanitizedParams->getString('owmApiKey');
 		$mbApiKey = $sanitizedParams->getString('mbApiKey');
 		$gmApiKey = $sanitizedParams->getString('gmApiKey');
-		$cachePeriod = $sanitizedParams->getInt('cachePeriod', ['default' => 15]);
+		$cachePeriod = $sanitizedParams->getInt('cachePeriod'); //, ['default' => 15]
 
 		if ($this->module->enabled != 0) {
 			if ($owmApiKey == '') {
@@ -138,8 +139,12 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				throw new \InvalidArgumentException(__('You must enter atleast one map key. Choose either mapbox or google maps'));
 			}
 
-			if ($cachePeriod <= 0)
-				throw new InvalidArgumentException(__('Cache period must be a positive number'), 'cachePeriod');
+			// throw new \InvalidArgumentException(__('Cache Period: ' & strval($cachePeriod)));
+
+			if ($cachePeriod <= 0) {
+				throw new \InvalidArgumentException(__('Cache period must be a positive number'));
+				// , 'cachePeriod'
+			}
 		}
 
 		$this->module->settings['owmApiKey'] = $owmApiKey;
@@ -158,10 +163,10 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 	public function validate()
 	{
 		if ($this->getUseDuration() == 1 && $this->getDuration() == 0)
-			throw new InvalidArgumentException(__('You must enter a duration.'));
+			throw new \InvalidArgumentException(__('You must enter a duration.'));
 
 		if ($this->getOption('zoom') == '' || $this->getOption('zoom') < 0 || $this->getOption('zoom') > 18) {
-			throw new InvalidArgumentException(__('Zoom should be between 0 and 18'), 'zoom');
+			throw new \InvalidArgumentException(__('Zoom should be between 0 and 18'));
 		}
 		// TODO More validation
 	}
