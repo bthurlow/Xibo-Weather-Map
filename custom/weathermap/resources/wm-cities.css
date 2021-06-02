@@ -1,0 +1,93 @@
+/* Template 1 */
+.owm-icondiv.template1 {
+    background-color: rgba(0, 0, 0, 0.9);
+    /* width: fit-content; */
+    width:150px;
+}
+.template1 .city {
+    font-size: large;
+    color: white;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    padding: 0 5px;
+}
+.template1 .details {
+    color: white;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    text-align: center;
+}
+.template1 .detailWrapper {
+    color: white;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    padding: 0 5px;
+    margin: 2px;
+}
+.template1 .temp {
+    font-size: x-large;
+    background: linear-gradient(#333, #eee, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.template1 .icon {
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    /* margin: 2px; */
+    padding: 0;
+    text-align: center;
+}
+.template1 .city .city-grad {
+    background: linear-gradient(#333, #eee, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.template1 .description {
+    /* font-size: x-large; */
+    background: linear-gradient(#333, #eee, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Template 2 */
+.owm-icondiv.template2 {
+    /* background-color: rgba(0, 0, 0, 0.9); */
+    /* width: fit-content; */
+    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%);
+    width:150px;
+}
+.template2 .city {
+    font-size: large;
+    color: black;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    padding: 0 5px;
+}
+.template2 .details {
+    color: black;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    text-align: center;
+}
+.template2 .detailWrapper {
+    color: black;
+    /* background-color: rgba(0, 0, 0, 0.7); */
+    padding: 0 5px;
+    margin: 2px;
+}
+.template2 .temp {
+    font-size: x-large;
+    /* background: linear-gradient(#333, #eee, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; */
+}
+.template2 .icon {
+    background-color: rgba(0, 0, 0, 0.7);
+    /* margin: 2px; */
+    padding: 0;
+    text-align: center;
+}
+/* .template2 .city .city-grad {
+    background: linear-gradient(#333, #eee, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+} */
+/* .template2 .description {
+    background: linear-gradient(#333, #eee, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+} */

@@ -1,0 +1,43 @@
+{#
+/*
+ * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-form-settings.twig
+ * 
+ * File Overview: 
+ * 
+ * Project: weathermap
+ * 
+ * Project Path: c:\Projects\xibo-weather-map\custom\weathermap
+ * 
+ * Created Date: Thursday, May 7th 2020, 3:36:25 pm
+ * 
+ * Author: Brian Thurlow
+ * ___
+ * Last Modified: Sunday, May 10th 2020, 8:54:57 am
+ * 
+ * Modified By: Brian Thurlow
+ * ___
+ * Copyright (c) 2020 Brian Thurlow
+ * ___
+ */
+ #}
+
+{% extends "module-form-settings.twig" %}
+{% import "forms.twig" as forms %}
+
+{% block moduleFormFields %}
+    {% set title %}{% trans "OpenWeatherMaps API Key" %}{% endset %}
+    {% set helpText %}{% trans "Enter your OpenWeatherMaps API Key" %}{% endset %}
+    {{ forms.input("owmApiKey", title, module.getSetting("owmApiKey"), helpText, "", "required") }}
+
+    {% set title %}{% trans "MapBox API Key" %}{% endset %}
+    {% set helpText %}{% trans "Enter your MapBox API Key" %}{% endset %}
+    {{ forms.input("mbApiKey", title, module.getSetting("mbApiKey"), helpText) }}
+
+    {% set title %}{% trans "Google Maps API Key" %}{% endset %}
+    {% set helpText %}{% trans "Enter your Google Maps API Key" %}{% endset %}
+    {{ forms.input("gmApiKey", title, module.getSetting("gmApiKey"), helpText) }}
+
+    {% set title %}{% trans "Cache Period" %}{% endset %}
+    {% set helpText %}{% trans "Enter the number of minutes you would like to cache requests for" %}{% endset %}
+    {{ forms.input("cachePeriod", title, module.getSetting("cachePeriod", 15), helpText) }}
+{% endblock %}

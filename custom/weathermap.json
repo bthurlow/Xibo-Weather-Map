@@ -1,0 +1,7 @@
+{
+    "title": "Weather Map Visualization",
+    "author": "Brian Thurlow",
+    "description": "A module to map OpenWeatherMap on top of MapBox or Google Maps.",
+    "name": "weathermap",
+    "class": "Xibo\\Custom\\weathermap\\weathermap"
+}

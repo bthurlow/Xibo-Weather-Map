@@ -1,0 +1,232 @@
+{#
+/*
+ * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-form-edit.twig
+ * 
+ * File Overview: 
+ * 
+ * Project: weathermap
+ * 
+ * Project Path: c:\Projects\xibo-weather-map\custom\weathermap
+ * 
+ * Created Date: Friday, May 8th 2020, 8:38:26 am
+ * 
+ * Author: Brian Thurlow
+ * ___
+ * Last Modified: Wednesday, June 2nd 2021, 2:55:30 pm
+ * 
+ * Modified By: Brian Thurlow
+ * ___
+ * Copyright (c) 2020 Brian Thurlow
+ * ___
+ */
+#}
+
+{% extends "form-base.twig" %}
+{% import "forms.twig" as forms %}
+
+{% block formTitle %}
+    {% trans "Weather Map" %}
+{% endblock %}
+
+{% block formHtml %}
+    <div class="row">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#general" role="tab" data-toggle="tab"><span>{% trans "General" %}</span></a></li>
+            <li><a href="#mapConfigurationTab" role="tab" data-toggle="tab"><span>{% trans "Map Configuration" %}</span></a></li>
+            <li><a href="#pinConfigurationTab" role="tab" data-toggle="tab"><span>{% trans "Pin Configuration" %}</span></a></li>
+            <li><a href="#citiesConfigurationTab" role="tab" data-toggle="tab"><span>{% trans "Cities Configuration" %}</span></a></li>
+            <li><a href="#cacheTab" role="tab" data-toggle="tab"><span>{% trans "Caching" %}</span></a></li>
+        </ul>
+        <div class="col-md-12">
+            <form id="weathermapEditForm" class="XiboForm form-horizontal" method="put" action="{{ urlFor("module.widget.edit", {id: module.widget.widgetId}) }}">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="general">
+                        {% set title %}{% trans "Name" %}{% endset %}
+                        {% set helpText %}{% trans "An optional name for this widget" %}{% endset %}
+                        {{ forms.input("name", title, module.getOption("name"), helpText) }}
+
+                        {% set title %}{% trans "Set a duration?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to provide a specific duration for this Widget" %}{% endset %}
+                        {{ forms.checkbox("useDuration", title, module.getUseDuration(), helpText) }}
+
+                        {% set title %}{% trans "Duration" %}{% endset %}
+                        {% set helpText %}{% trans "The duration in seconds this item should be displayed." %}{% endset %}
+                        {{ forms.number("duration", title, module.getDuration(), helpText, "duration-fields", "required") }}
+
+                        {% set title %}{% trans "Enable Stats Collection?" %}{% endset %}
+                        {% set helpText %}{% trans "Enable the collection of Proof of Play statistics for this Widget. Ensure that ‘Enable Stats Collection’ is set to ‘On’ in the Display Settings." %}{% endset %}
+                        {% set offOption %}{% trans "Off" %}{% endset %}
+                        {% set onOption %}{% trans "On" %}{% endset %}
+                        {% set inheritOption %}{% trans "Inherit" %}{% endset %}
+                        {% set options = [
+                            { id: "Off", value: offOption },
+                            { id: "On", value: onOption },
+                            { id: "Inherit", value: inheritOption }
+                        ] %}
+                        {{ forms.dropdown("enableStat", "single", title, module.getOption("enableStat", theme.getSetting("WIDGET_STATS_ENABLED_DEFAULT")), options, "id", "value", helpText) }}
+                    </div>
+                    <div class="tab-pane" id="mapConfigurationTab">
+                        {# //TODO Use Device Location #}
+                        {% set title %}{% trans "Latitude" %}{% endset %}
+                        {% set helpText %}{% trans "The Latitude for the maps center" %}{% endset %}
+                        {{ forms.number("latitude", title, module.getOption("latitude"), helpText, "locationControls") }}
+
+                        {% set title %}{% trans "Longitude" %}{% endset %}
+                        {% set helpText %}{% trans "The Longitude for the maps center" %}{% endset %}
+                        {{ forms.number("longitude", title, module.getOption("longitude"), helpText, "locationControls") }}
+
+                        {% set title %}{% trans "Zoom" %}{% endset %}
+                        {% set helpText %}{% trans "The map zoom level" %}{% endset %}
+                        {{ forms.number("zoom", title, module.getOption("zoom",10), helpText, "locationControls") }}
+
+                        {% set title %}{% trans "Map Type" %}{% endset %}
+                        {% set helpText %}{% trans "The map type to display" %}{% endset %}
+                        {% set optStreet %}{% trans "Street" %}{% endset %}
+                        {% set optSatillite %}{% trans "Satillite" %}{% endset %}
+                        {% set options = [
+                            { id: "street", value: optStreet },
+                            { id: "satillite", value: optSatillite },
+                        ] %}
+                        {{ forms.dropdown("mapType", "single", title, module.getOption("mapType", "street"), options, "id", "value", helpText) }}
+
+                        {# OWM Overlay Type #}
+                        {% set title %}{% trans "Map Overlay Type" %}{% endset %}
+                        {% set helpText %}{% trans "The overlay type to display" %}{% endset %}
+                        {% set optRadar %}{% trans "Radar (API V2 Premium Only)" %}{% endset %}
+                        {% set optClouds %}{% trans "Clouds" %}{% endset %}
+                        {% set optTemperature %}{% trans "Temperature" %}{% endset %}
+                        {% set optPressure %}{% trans "Pressure" %}{% endset %}
+                        {% set optWindspeed %}{% trans "Wind Speed" %}{% endset %}
+                        {% set optPrecipitation %}{% trans "Precipitation" %}{% endset %}
+                        {% set options = [
+                            { id: "radar", value: optRadar },
+                            { id: "clouds", value: optClouds },
+                            { id: "temperature", value: optTemperature },
+                            { id: "pressure", value: optPressure },
+                            { id: "windspeed", value: optWindspeed },
+                            { id: "precipitation", value: optPrecipitation },
+                        ] %}
+                        {{ forms.dropdown("overlayType", "single", title, module.getOption("overlayType", "radar"), options, "id", "value", helpText) }}
+
+                        {% set title %}{% trans "Interactive Map?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to make this map interactive" %}{% endset %}
+                        {{ forms.checkbox("isInteractive", title, module.getOption("isInteractive", false), helpText) }}
+
+                        {% set title %}{% trans "Show zoom controls?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to show the zoom controls" %}{% endset %}
+                        {{ forms.checkbox("showZoom", title, module.getOption("showZoom", false), helpText) }}
+
+                        {% set title %}{% trans "Language" %}{% endset %}
+                        {% set helpText %}{% trans "The map language" %}{% endset %}
+                        {% set optEN %}{% trans "English" %}{% endset %}
+                        {% set optIT %}{% trans "Italian" %}{% endset %}
+                        {% set optDE %}{% trans "German" %}{% endset %}
+                        {% set optRU %}{% trans "Russian" %}{% endset %}
+                        {% set optFR %}{% trans "French" %}{% endset %}
+                        {% set optNL %}{% trans "Dutch" %}{% endset %}
+                        {% set optES %}{% trans "Spanish" %}{% endset %}
+                        {% set optCA %}{% trans "Catalan" %}{% endset %}
+                        {% set optPT %}{% trans "Brazillian" %}{% endset %}
+                        {% set options = [
+                            { id: "en", value: optEN },
+                            { id: "it", value: optIT },
+                            { id: "de", value: optDE },
+                            { id: "ru", value: optRU },
+                            { id: "fr", value: optFR },
+                            { id: "nl", value: optNL },
+                            { id: "es", value: optES },
+                            { id: "ca", value: optCA },
+                            { id: "pt_br", value: optPT },
+                        ] %}
+                        {{ forms.dropdown("language", "single", title, module.getOption("language", "en"), options, "id", "value", helpText) }}
+                    </div>
+                    <div class="tab-pane" id="pinConfigurationTab">
+                        {% set title %}{% trans "Show Pin?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to show a pin on the map" %}{% endset %}
+                        {{ forms.checkbox("showPin", title, module.getOption("showPin", false), helpText) }}
+
+                        {% set title %}{% trans "Use Map Latitude/Longitude?" %}{% endset %}
+                        {% set helpText %}{% trans "Use the map's latitude and longitude for the pin location." %}{% endset %}
+                        {{ forms.checkbox("useMapLatLong", title, module.getOption("useMapLatLong", false), helpText, "pinControls") }}
+
+                        {% set title %}{% trans "Latitude" %}{% endset %}
+                        {% set helpText %}{% trans "The Latitude for the maps center" %}{% endset %}
+                        {{ forms.number("pinLatitude", title, module.getOption("pinLatitude"), helpText, "pinControls pinLocationControls") }}
+
+                        {% set title %}{% trans "Longitude" %}{% endset %}
+                        {% set helpText %}{% trans "The Longitude for the maps center" %}{% endset %}
+                        {{ forms.number("pinLongitude", title, module.getOption("pinLongitude"), helpText, "pinControls pinLocationControls") }}
+
+                        {% set title %}{% trans "Use Default Pin Image?" %}{% endset %}
+                        {% set helpText %}{% trans "Use the default pin image." %}{% endset %}
+                        {{ forms.checkbox("usePinDefault", title, module.getOption("usePinDefault", true), helpText, "pinControls") }}
+
+                        {% set title %}{% trans "Custom Pin Image" %}{% endset %}
+                        {% set helpText %}{% trans "Enter the Media Library ID of the image you want to use." %}{% endset %}
+                        {{ forms.number("customPinImage", title, module.getOption("customPinImage"), helpText, "pinControls pinImage") }}
+
+                        {% set title %}{% trans "Custom Pin Shadow Image" %}{% endset %}
+                        {% set helpText %}{% trans "Enter the Media Library ID of the image you want to use." %}{% endset %}
+                        {{ forms.number("customPinShadowImage", title, module.getOption("customPinShadowImage"), helpText, "pinControls pinImage") }}
+
+                        {% set title %}{% trans "Pin Width" %}{% endset %}
+                        {% set helpText %}{% trans "The width in pixels for the pin image" %}{% endset %}
+                        {{ forms.number("pinWidth", title, module.getOption("pinWidth",25), helpText, "pinControls") }}
+
+                        {% set title %}{% trans "Pin Height" %}{% endset %}
+                        {% set helpText %}{% trans "The height in pixels for the pin image" %}{% endset %}
+                        {{ forms.number("pinHeight", title, module.getOption("pinHeight",41), helpText, "pinControls") }}
+
+                        {% set title %}{% trans "Pin Shadow Width" %}{% endset %}
+                        {% set helpText %}{% trans "The width in pixels for the pin image" %}{% endset %}
+                        {{ forms.number("pinShadowWidth", title, module.getOption("pinShadowWidth",41), helpText, "pinControls") }}
+
+                        {% set title %}{% trans "Pin Shadow Height" %}{% endset %}
+                        {% set helpText %}{% trans "The height in pixels for the pin image" %}{% endset %}
+                        {{ forms.number("pinShadowHeight", title, module.getOption("pinShadowHeight",41), helpText, "pinControls") }}
+                    </div>
+                    <div class="tab-pane" id="citiesConfigurationTab">
+                        {% set title %}{% trans "Show Cities?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to show near by cities on the map.  This will result in an additional api call to OpenWeatherMaps." %}{% endset %}
+                        {{ forms.checkbox("showCities", title, module.getOption("showCities", false), helpText) }}
+
+                        {% set title %}{% trans "Units" %}{% endset %}
+                        {% set helpText %}{% trans "The map unit display" %}{% endset %}
+                        {% set optImperial %}{% trans "Imperial" %}{% endset %}
+                        {% set optMetric %}{% trans "Metric" %}{% endset %}
+                        {% set options = [
+                            { id: "imperial", value: optImperial },
+                            { id: "metric", value: optMetric },
+                        ] %}
+                        {{ forms.dropdown("units", "single", title, module.getOption("units", "imperial"), options, "id", "value", helpText, "cityControls") }}
+
+                        {% set title %}{% trans "Icon Set" %}{% endset %}
+                        {% set helpText %}{% trans "The icon set to use" %}{% endset %}
+                        {% set optDefault %}{% trans "Default" %}{% endset %}
+                        {% set optAMCAni %}{% trans "AMCharts Animated" %}{% endset %}
+                        {% set optAMCStat %}{% trans "AMCharts Static" %}{% endset %}
+                        {% set options = [
+                            { id: "default", value: optDefault },
+                            { id: "amchartsAnimated", value: optAMCAni },
+                            { id: "amchartsStatic", value: optAMCStat },
+                        ] %}
+                        {{ forms.dropdown("iconSet", "single", title, module.getOption("iconSet", "default"), options, "id", "value", helpText, "cityControls") }}
+                    </div>
+                    <div class="tab-pane" id="cacheTab">
+                        {% set title %}{% trans "Update Interval (mins)" %}{% endset %}
+                        {% set helpText %}{% trans "Please enter the update interval in minutes. This should be kept as high as possible. For example, if the data will only change once per hour this could be set to 60." %}{% endset %}
+                        {{ forms.number("cachePeriod", title, module.getOption("cachePeriod", 15), helpText, "", "required") }}
+                    </div>
+                    {% if module.getSetting("owmApiKey") == "" %}
+                        {% set message %}{% trans "The Weather Map Widget has not been configured yet, please ask your CMS Administrator to look at it for you." %}{% endset %}
+                        {{ forms.message(message, "alert alert-danger") }}
+                    {% endif %}
+                    {% if module.getSetting("mbApiKey") == "" and module.getSetting("gmApiKey") == "" %}
+                        {% set message %}{% trans "The Weather Map Widget has not been configured yet, please ask your CMS Administrator to look at it for you." %}{% endset %}
+                        {{ forms.message(message, "alert alert-danger") }}
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

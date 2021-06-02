@@ -1,0 +1,44 @@
+{#
+/*
+ * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-designer.javascript.twig
+ * 
+ * File Overview: 
+ * 
+ * Project: weathermap
+ * 
+ * Project Path: c:\Projects\xibo-weather-map\custom\weathermap
+ * 
+ * Created Date: Friday, May 8th 2020, 8:33:26 am
+ * 
+ * Author: Brian Thurlow
+ * ___
+ * Last Modified: Thursday, May 14th 2020, 5:37:52 am
+ * 
+ * Modified By: Brian Thurlow
+ * ___
+ * Copyright (c) 2020 Brian Thurlow
+ * ___
+ */
+ #}
+
+<style>
+    .module-icon-weathermap:before {
+        content: "\f043" !important;
+    }
+</style>
+
+<script type="text/javascript">
+    // Runs after edit form opens
+    function weathermap_form_edit_open() {
+        // Set duration field, using the helper ()
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#useDuration', '.duration-fields');
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#showPin', '.pinControls');
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#useMapLatLong', '', '.pinLocationControls');
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#usePinDefault', '', '.pinImage');
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#showCities', '.cityControls');
+    }
+
+    // Runs before form submit
+    //function weathermap_form_edit_submit() {
+    //}
+</script>
