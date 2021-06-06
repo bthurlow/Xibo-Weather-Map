@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 4:07:17 pm
+ * Last Modified: Sunday, June 6th 2021, 9:25:47 am
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -216,6 +216,8 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 		$this->setOption('isInteractive', $sanitizedParams->getCheckbox('isInteractive'));
 		$this->setOption('showZoom', $sanitizedParams->getCheckbox('showZoom'));
 		$this->setOption('overlayType', $sanitizedParams->getString('overlayType'));
+		$this->setOption('showLegend', $sanitizedParams->getCheckbox('showLegend'));
+		$this->setOption('legendPosition', $sanitizedParams->getString('legendPosition'));
 
 		//Pin Options
 		$this->setOption('showPin', $sanitizedParams->getCheckbox('showPin'));
@@ -336,11 +338,11 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				" . $this->getOption('latitude', 35.670962) . ", //Map Center Lat
 				" . $this->getOption('longitude', -88.852231) . ", //Map Center Long
 				" . $this->getOption('zoom', 10) . ", //Zoom
-				'" . $this->getOption('mapType', "street") . "',
-				'" . $this->getOption('overlayType', "precipitation") . "',
-				" . $this->getOption('isInteractive', false) . ",
-				" . $this->getOption('showZoom', false) . ",
-				'" . $this->getOption('language', "en") . "',
+				'" . $this->getOption('mapType', "street") . "', //Map Type
+				'" . $this->getOption('overlayType', "precipitation") . "', //Weather Overlay Type
+				" . $this->getOption('isInteractive', false) . ", //Make map interactive
+				" . $this->getOption('showZoom', false) . ", //Show the zoom controls
+				'" . $this->getOption('language', "en") . "', 
 				'" . $this->getOption('units', 'imperial') . "',
 				'" . $this->getOption('iconSet', 'default') . "',
 				" . json_encode($icons) . ",
@@ -354,6 +356,8 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				" . $this->getOption('pinShadowWidth', 41) . ",
 				" . $this->getOption('pinShadowHeight', 41) . ",
 				" . $this->getOption('showCities', false) . ",
+				" . $this->getOption('showLegend', false) . ", // Show Overlay Legend
+				'" . $this->getOption('legendPosition', 'bottomright') . "', // Overlay Legend Position
 			);
 		});
 		</script>";

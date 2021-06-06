@@ -2,9 +2,9 @@
 /*
  * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-form-edit.twig
  * 
- * File Overview: 
+ * File Overview: Weather Map Edit Form
  * 
- * Project: weathermap
+ * Project: xibo-weather-map
  * 
  * Project Path: c:\Projects\xibo-weather-map\custom\weathermap
  * 
@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 2:55:30 pm
+ * Last Modified: Sunday, June 6th 2021, 9:42:19 am
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -83,9 +83,13 @@
                         {% set helpText %}{% trans "The map type to display" %}{% endset %}
                         {% set optStreet %}{% trans "Street" %}{% endset %}
                         {% set optSatillite %}{% trans "Satillite" %}{% endset %}
+                        {% set optLight %}{% trans "Light" %}{% endset %}
+                        {% set optDark %}{% trans "Dark" %}{% endset %}
                         {% set options = [
                             { id: "street", value: optStreet },
                             { id: "satillite", value: optSatillite },
+                            { id: "light", value: optLight },
+                            { id: "dark", value: optDark },
                         ] %}
                         {{ forms.dropdown("mapType", "single", title, module.getOption("mapType", "street"), options, "id", "value", helpText) }}
 
@@ -107,6 +111,24 @@
                             { id: "precipitation", value: optPrecipitation },
                         ] %}
                         {{ forms.dropdown("overlayType", "single", title, module.getOption("overlayType", "radar"), options, "id", "value", helpText) }}
+
+                        {% set title %}{% trans "Show overlay legend?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to show the overlay legend" %}{% endset %}
+                        {{ forms.checkbox("showLegend", title, module.getOption("showLegend", true), helpText) }}
+
+                        {% set title %}{% trans "Legend Position" %}{% endset %}
+                        {% set helpText %}{% trans "Position of the legend on the screen" %}{% endset %}
+                        {% set optBtmLft %}{% trans "Bottom Left" %}{% endset %}
+                        {% set optBtmRgt %}{% trans "Bottom Right" %}{% endset %}
+                        {% set optTopLft %}{% trans "Top Left" %}{% endset %}
+                        {% set optTopRgt %}{% trans "Top Right" %}{% endset %}
+                        {% set options = [
+                            { id: "bottomleft", value: optBtmLft },
+                            { id: "bottomright", value: optBtmRgt },
+                            { id: "topleft", value: optTopLft },
+                            { id: "topright", value: optTopRgt },
+                        ] %}
+                        {{ forms.dropdown("legendPosition", "single", title, module.getOption("legendPosition", "bottomright"), options, "id", "value", helpText) }}
 
                         {% set title %}{% trans "Interactive Map?" %}{% endset %}
                         {% set helpText %}{% trans "Select to make this map interactive" %}{% endset %}
@@ -139,6 +161,16 @@
                             { id: "pt_br", value: optPT },
                         ] %}
                         {{ forms.dropdown("language", "single", title, module.getOption("language", "en"), options, "id", "value", helpText) }}
+
+                        {% set title %}{% trans "Units" %}{% endset %}
+                        {% set helpText %}{% trans "The map unit display" %}{% endset %}
+                        {% set optImperial %}{% trans "Imperial" %}{% endset %}
+                        {% set optMetric %}{% trans "Metric" %}{% endset %}
+                        {% set options = [
+                            { id: "imperial", value: optImperial },
+                            { id: "metric", value: optMetric },
+                        ] %}
+                        {{ forms.dropdown("units", "single", title, module.getOption("units", "imperial"), options, "id", "value", helpText) }}
                     </div>
                     <div class="tab-pane" id="pinConfigurationTab">
                         {% set title %}{% trans "Show Pin?" %}{% endset %}
@@ -189,17 +221,7 @@
                         {% set title %}{% trans "Show Cities?" %}{% endset %}
                         {% set helpText %}{% trans "Select to show near by cities on the map.  This will result in an additional api call to OpenWeatherMaps." %}{% endset %}
                         {{ forms.checkbox("showCities", title, module.getOption("showCities", false), helpText) }}
-
-                        {% set title %}{% trans "Units" %}{% endset %}
-                        {% set helpText %}{% trans "The map unit display" %}{% endset %}
-                        {% set optImperial %}{% trans "Imperial" %}{% endset %}
-                        {% set optMetric %}{% trans "Metric" %}{% endset %}
-                        {% set options = [
-                            { id: "imperial", value: optImperial },
-                            { id: "metric", value: optMetric },
-                        ] %}
-                        {{ forms.dropdown("units", "single", title, module.getOption("units", "imperial"), options, "id", "value", helpText, "cityControls") }}
-
+                        
                         {% set title %}{% trans "Icon Set" %}{% endset %}
                         {% set helpText %}{% trans "The icon set to use" %}{% endset %}
                         {% set optDefault %}{% trans "Default" %}{% endset %}
