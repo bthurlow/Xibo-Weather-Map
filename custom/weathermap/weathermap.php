@@ -2,7 +2,7 @@
 /*
  * File: c:\Projects\xibo-weather-map\custom\weather-map\weather-map.php
  * 
- * File Overview: 
+ * File Overview: Weather Map Module Main
  * 
  * Project: weather-map
  * 
@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Sunday, June 6th 2021, 9:25:47 am
+ * Last Modified: Sunday, June 6th 2021, 11:49:25 am
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -266,6 +266,33 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 	 */
 	public function getResource($displayId = 0)
 	{
+		// Get the Lat/Long
+		$defaultLat = $this->getConfig()->getSetting('DEFAULT_LAT');
+		$defaultLong = $this->getConfig()->getSetting('DEFAULT_LONG');
+
+		//Device Location
+		if ($this->getOption('useDisplayLocation') == 0) {
+			// Use the display ID or the default.
+			if ($displayId != 0) {
+
+				$display = $this->displayFactory->getById($displayId);
+
+				if (
+					$display->latitude != '' && $display->longitude != ''
+					&& v::latitude()->validate($display->latitude)
+					&& v::longitude()->validate($display->longitude)
+				) {
+					$defaultLat = $display->latitude;
+					$defaultLong = $display->longitude;
+				} else {
+					$this->getLog()->info('Warning, display ' .  $display->display . ' does not have a lat/long or they are invalid!');
+				}
+			}
+		} else {
+			$defaultLat = $this->getOption('latitude', 35.670962);
+			$defaultLong = $this->getOption('longitude', -88.852231);
+		}
+
 		// Load in the template
 		$data = [];
 
@@ -335,8 +362,8 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				'" . $this->getSetting('mbApiKey', '') . "', //MapBox Key
 				'" . $this->getSetting('gmApiKey', '') . "', //Google Maps Key
 				'" . $containerId . "', //Map Element
-				" . $this->getOption('latitude', 35.670962) . ", //Map Center Lat
-				" . $this->getOption('longitude', -88.852231) . ", //Map Center Long
+				" . $defaultLat . ", //Map Center Lat
+				" . $defaultLong . ", //Map Center Long
 				" . $this->getOption('zoom', 10) . ", //Zoom
 				'" . $this->getOption('mapType', "street") . "', //Map Type
 				'" . $this->getOption('overlayType', "precipitation") . "', //Weather Overlay Type

@@ -11,15 +11,17 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Sunday, June 6th 2021, 9:44:57 am
+ * Last Modified: Sunday, June 6th 2021, 11:50:22 am
  * 
  * Modified By: Brian Thurlow
  * ___
  * Copyright (c) 2020 Brian Thurlow
  * ___
  */
-//TODO Cleanup
-//TODO Documentation
+/** 
+ * Initialize the map.
+ *
+ */
 initMap = (
 	owmAPI,
 	mbAPI,
@@ -208,7 +210,7 @@ initMap = (
 			unit: unit,
 			iconSet: iconSet,
 			icons: icons,
-			overlayTemplate: 2,
+			overlayTemplate: 1,
 		});
 		// console.log(cities);
 

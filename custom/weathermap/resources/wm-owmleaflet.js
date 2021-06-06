@@ -13,14 +13,13 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Sunday, June 6th 2021, 10:47:06 am
+ * Last Modified: Sunday, June 6th 2021, 11:01:01 am
  * 
  * Modified By: Brian Thurlow
  * ___
  * Copyright (c) 2020 Brian Thurlow
  * ___
  */
-//TODO Needs reworked to support Maps v2 and custom images/icons
 /**
  * OWM Leaflet Extension
  *

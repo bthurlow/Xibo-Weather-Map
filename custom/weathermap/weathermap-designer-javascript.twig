@@ -2,7 +2,7 @@
 /*
  * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-designer.javascript.twig
  * 
- * File Overview: 
+ * File Overview: Weather Map Designer Twig
  * 
  * Project: weathermap
  * 
@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Thursday, May 14th 2020, 5:37:52 am
+ * Last Modified: Sunday, June 6th 2021, 11:16:35 am
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -36,6 +36,7 @@
         formHelpers.setupCheckboxInputFields($(this).find('form'), '#useMapLatLong', '', '.pinLocationControls');
         formHelpers.setupCheckboxInputFields($(this).find('form'), '#usePinDefault', '', '.pinImage');
         formHelpers.setupCheckboxInputFields($(this).find('form'), '#showCities', '.cityControls');
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#useDisplayLocation', '.locationControls');
     }
 
     // Runs before form submit
