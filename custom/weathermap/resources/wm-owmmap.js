@@ -11,7 +11,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Sunday, June 6th 2021, 11:50:22 am
+ * Last Modified: Sunday, June 6th 2021, 12:58:57 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -50,6 +50,7 @@ initMap = (
 	showCities,
 	showLegend,
 	legendPosition,
+	cityTemplate,
 ) => {
 	//TODO Google Maps
 	//Load Mapbox
@@ -210,7 +211,7 @@ initMap = (
 			unit: unit,
 			iconSet: iconSet,
 			icons: icons,
-			overlayTemplate: 1,
+			overlayTemplate: cityTemplate,
 		});
 		// console.log(cities);
 

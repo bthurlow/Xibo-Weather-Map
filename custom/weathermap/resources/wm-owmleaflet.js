@@ -13,7 +13,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Sunday, June 6th 2021, 11:01:01 am
+ * Last Modified: Sunday, June 6th 2021, 1:01:29 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -413,15 +413,15 @@ L.OWM.Cities = L.Layer.extend({
         unit: 'metric', //available 'metric', 'imperial'
         iconSet: 'default',//Available Options 'default','amchartsAnimated','amchartsStatic'
         icons: [],
-        overlayTemplate: 1,//TODO Available 1,2,3...
+        overlayTemplate: 1,
     },
     initialize: function (options) {
         this.name = "Cities";
-        console.log('Cities initialize');
+        // console.log('Cities initialize');
         // console.log(this.options);
         // console.log(options);
         var newOpts = { ...this.options, ...options };
-        console.log(newOpts);
+        // console.log(newOpts);
         L.setOptions(this, newOpts);
         this._layer = L.layerGroup();
         this._timeoutId = null;
@@ -781,7 +781,7 @@ L.OWM.Cities = L.Layer.extend({
     //     return txt;
     // },
     _getOverlayTemplate: function (station, imageurl) {
-        console.log('_getOverlayTemplate');
+        // console.log('_getOverlayTemplate');
         var txt = '';
         switch (this.options.overlayTemplate) {
             case 1:
@@ -803,6 +803,38 @@ L.OWM.Cities = L.Layer.extend({
                     + '<div class="col-xs-8 details"><div class="temp">' + _temperatureConvert(station.main.temp, this.options.unit, this.options.temperatureDigits) + _displayTemperatureUnit(this.options.unit) + '</div><div class="description">'
                     + _i18n('id' + station.weather[0].id, station.weather[0].description + ' (' + station.weather[0].id + ')', this.options.lang)
                     + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 3:
+                txt += '<div class="owm-icondiv template3 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-5 iconContainer" style="padding:0;"><div class="icon" style="width:60px;"><img src="' + imageurl + '" border="0" width="60" height="60" /></div></div>'
+                    + '<div class="col-xs-7 details"><div class="city city-grad">' + station.name + '</div><div class="temp">' + _temperatureConvert(station.main.temp, this.options.unit, this.options.temperatureDigits) + _displayTemperatureUnit(this.options.unit) + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 4:
+                txt += '<div class="owm-icondiv template4 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-5 iconContainer" style="padding:0;"><div class="icon" style="width:60px;"><img src="' + imageurl + '" border="0" width="60" height="60" /></div></div>'
+                    + '<div class="col-xs-7 details"><div class="city city-grad">' + station.name + '</div><div class="temp">' + _temperatureConvert(station.main.temp, this.options.unit, this.options.temperatureDigits) + _displayTemperatureUnit(this.options.unit) + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 5:
+                txt += '<div class="owm-icondiv template5 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-2 iconContainer"><div class="icon" style="width:25px;"><img src="' + imageurl + '" border="0" width="25" height="25" /></div></div>'
+                    + '<div class="col-xs-10 details"><div class="city city-grad">' + station.name + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 6:
+                txt += '<div class="owm-icondiv template6 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-2 iconContainer"><div class="icon" style="width:25px;"><img src="' + imageurl + '" border="0" width="25" height="25" /></div></div>'
+                    + '<div class="col-xs-10 details"><div class="city city-grad">' + station.name + '</div>'
                     + '</div>';
                 txt += '</div>';
                 break;

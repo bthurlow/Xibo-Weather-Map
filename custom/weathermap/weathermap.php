@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Sunday, June 6th 2021, 11:49:25 am
+ * Last Modified: Sunday, June 6th 2021, 2:59:51 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -103,6 +103,11 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 			/* @var Media $media */
 			$media->save();
 		}
+		//Install Extra files
+		foreach ($this->mediaFactory->createModuleFileFromFolder($this->resourceFolder . '/template-images') as $media) {
+			/* @var Media $media */
+			$media->save();
+		}
 	}
 	/**
 	 * Form for updating the module settings
@@ -168,7 +173,6 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 		if ($this->getOption('zoom') == '' || $this->getOption('zoom') < 0 || $this->getOption('zoom') > 18) {
 			throw new \InvalidArgumentException(__('Zoom should be between 0 and 18'));
 		}
-		// TODO More validation
 	}
 
 	//Not needed for xibo v2
@@ -241,6 +245,7 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 		$this->setOption('showCities', $sanitizedParams->getCheckbox('showCities'));
 		$this->setOption('units', $sanitizedParams->getString('units'));
 		$this->setOption('iconSet', $sanitizedParams->getString('iconSet'));
+		$this->setOption('cityTemplate', $sanitizedParams->getInt('cityTemplate'));
 	}
 
 	/**
@@ -385,6 +390,7 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				" . $this->getOption('showCities', false) . ",
 				" . $this->getOption('showLegend', false) . ", // Show Overlay Legend
 				'" . $this->getOption('legendPosition', 'bottomright') . "', // Overlay Legend Position
+				" . $this->getOption('cityTemplate', 6) . ",//City Template
 			);
 		});
 		</script>";
