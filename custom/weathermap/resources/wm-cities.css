@@ -24,6 +24,7 @@
 .template1 .temp {
     font-size: x-large;
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -35,12 +36,14 @@
 }
 .template1 .city .city-grad {
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .template1 .description {
     /* font-size: x-large; */
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

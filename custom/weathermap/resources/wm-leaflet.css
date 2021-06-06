@@ -37,6 +37,7 @@
 .leaflet-safari .leaflet-tile-container {
 	width: 1600px;
 	height: 1600px;
+	transform-origin: 0 0;
 	-webkit-transform-origin: 0 0;
 }
 .leaflet-marker-icon,
@@ -91,6 +92,7 @@
 }
 /* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
 .leaflet-overlay-pane svg {
+	user-select: none;
 	-moz-user-select: none;
 }
 
