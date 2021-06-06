@@ -1,93 +1,186 @@
-/* Template 1 */
+/* NOTE: Template 1 Large Dark */
 .owm-icondiv.template1 {
     background-color: rgba(0, 0, 0, 0.9);
-    /* width: fit-content; */
-    width:150px;
+    width: 150px;
 }
 .template1 .city {
     font-size: large;
     color: white;
-    /* background-color: rgba(0, 0, 0, 0.7); */
     padding: 0 5px;
 }
 .template1 .details {
     color: white;
-    /* background-color: rgba(0, 0, 0, 0.7); */
     text-align: center;
 }
 .template1 .detailWrapper {
     color: white;
-    /* background-color: rgba(0, 0, 0, 0.7); */
     padding: 0 5px;
     margin: 2px;
 }
 .template1 .temp {
     font-size: x-large;
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .template1 .icon {
-    /* background-color: rgba(0, 0, 0, 0.7); */
-    /* margin: 2px; */
     padding: 0;
     text-align: center;
 }
 .template1 .city .city-grad {
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .template1 .description {
-    /* font-size: x-large; */
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* Template 2 */
+/* NOTE: Template 2 Large Light */
 .owm-icondiv.template2 {
-    /* background-color: rgba(0, 0, 0, 0.9); */
-    /* width: fit-content; */
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0.5) 100%);
-    width:150px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%);
+    width: 150px;
 }
 .template2 .city {
     font-size: large;
     color: black;
-    /* background-color: rgba(0, 0, 0, 0.7); */
     padding: 0 5px;
 }
 .template2 .details {
     color: black;
-    /* background-color: rgba(0, 0, 0, 0.7); */
     text-align: center;
 }
 .template2 .detailWrapper {
     color: black;
-    /* background-color: rgba(0, 0, 0, 0.7); */
     padding: 0 5px;
     margin: 2px;
 }
 .template2 .temp {
     font-size: x-large;
-    /* background: linear-gradient(#333, #eee, #fff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent; */
 }
 .template2 .icon {
-    background-color: rgba(0, 0, 0, 0.7);
-    /* margin: 2px; */
+    background-color: rgba(0, 0, 0, 0.4);
     padding: 0;
     text-align: center;
 }
-/* .template2 .city .city-grad {
+
+/* NOTE: Template 3 Medium Light */
+.owm-icondiv.template3 {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%);
+    width: 150px;
+    border: rgba(0, 0, 0, 0.5) 2px solid;
+}
+.template3 .iconContainer {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.template3 .city {
+    font-size: unset;
+    color: black;
+    padding: 0 5px;
+    font-weight: bold;
+}
+.template3 .details {
+    color: black;
+    text-align: center;
+    padding: 0;
+}
+.template3 .temp {
+    font-size: xx-large;
+    line-height: 1;
+}
+.template3 .icon {
+    padding: 0;
+    text-align: center;
+}
+
+/* NOTE: Template 4 Medium Dark */
+.owm-icondiv.template4 {
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 150px;
+    border: rgba(0, 0, 0, 0.5) 2px solid;
+}
+.template4 .city {
+    font-size: unset;
+    padding: 0 5px;
+    font-weight: bold;
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-} */
-/* .template2 .description {
+}
+.template4 .details {
+    text-align: center;
+    padding: 0;
+}
+.template4 .temp {
+    font-size: xx-large;
+    line-height: 1;
     background: linear-gradient(#333, #eee, #fff);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-} */
+}
+.template4 .icon {
+    padding: 0;
+    text-align: center;
+}
+
+/* NOTE: Template 5 Small Light */
+.owm-icondiv.template5 {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.5) 100%);
+    width: 150px;
+    border: rgba(0, 0, 0, 0.5) 2px solid;
+    border-radius: 20px;
+}
+.template5 .iconContainer {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 0;
+    border-radius: 20px 0 0 20px;
+}
+.template5 .city {
+    font-size: 1.4em;
+    color: black;
+    padding: 0 5px;
+    font-weight: bold;
+}
+.template5 .details {
+    color: black;
+    text-align: center;
+    padding: 0;
+}
+.template5 .icon {
+    padding: 0;
+    text-align: center;
+}
+
+/* NOTE: Template 6 Small Dark */
+.owm-icondiv.template6 {
+    background-color: rgba(0, 0, 0, 0.9);
+    width: 150px;
+    border: rgba(0, 0, 0, 0.5) 2px solid;
+    border-radius: 20px;
+}
+.template6 .iconContainer {
+    padding: 0;
+    border-radius: 20px 0 0 20px;
+}
+.template6 .city {
+    font-size: 1.4em;
+    color: white;
+    padding: 0 5px;
+    font-weight: bold;
+}
+.template6 .details {
+    color: black;
+    text-align: center;
+    padding: 0;
+}
+.template6 .icon {
+    padding: 0;
+    text-align: center;
+}

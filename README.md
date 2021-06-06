@@ -30,4 +30,3 @@ Once installed, edit the module's settings and enter the information that is req
 * Google Maps is currently not supported.
 * OpenWeather API v2 does not have full support.
 * OpenWeather API v1 & v2 premium does not have full support.
-* Cities overlay option is not fully implemented yet.

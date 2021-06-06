@@ -1,7 +1,7 @@
 /**
  * File: c:\Projects\xibo-weather-map\web\modules\vendor\weather-map\scripts\owmmap.js
  * 
- * File Overview: 
+ * File Overview: The map builder
  * 
  * Project: scripts
  * 
@@ -11,15 +11,17 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 2:59:04 pm
+ * Last Modified: Sunday, June 6th 2021, 12:58:57 pm
  * 
  * Modified By: Brian Thurlow
  * ___
  * Copyright (c) 2020 Brian Thurlow
  * ___
  */
-//TODO Cleanup
-//TODO Documentation
+/** 
+ * Initialize the map.
+ *
+ */
 initMap = (
 	owmAPI,
 	mbAPI,
@@ -46,6 +48,9 @@ initMap = (
 	pinShadowWidth,
 	pinShadowHeight,
 	showCities,
+	showLegend,
+	legendPosition,
+	cityTemplate,
 ) => {
 	//TODO Google Maps
 	//Load Mapbox
@@ -61,10 +66,22 @@ initMap = (
 	mymap.attributionControl.setPrefix("");
 
 	var mt;
-	if (mapType === "street") {
-		mt = "mapbox/streets-v11";
-	} else {
-		mt = "mapbox/satellite-streets-v11";
+	switch (mapType) {
+		case "street":
+			mt = "mapbox/streets-v11";
+			break;
+		case "satillite":
+			mt = "mapbox/satellite-streets-v11";
+			break;
+		case "light":
+			mt = "mapbox/light-v10";
+			break;
+		case "dark":
+			mt = "mapbox/dark-v10";
+			break;
+		default:
+			mt = "mapbox/streets-v11";
+			break;
 	}
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -116,8 +133,8 @@ initMap = (
 				appId: owmAPI,
 				lang: lang,
 				unit: unit,
-				showLegend: true,//TODO Need Settable Option
-				legendPosition: 'bottomright',//TODO Need Settable Option
+				showLegend: showLegend,
+				legendPosition: legendPosition,
 			});
 			overlay.addTo(mymap);
 			break;
@@ -128,8 +145,8 @@ initMap = (
 				appId: owmAPI,
 				lang: lang,
 				unit: unit,
-				showLegend: true,//TODO Need Settable Option
-				legendPosition: 'bottomright',//TODO Need Settable Option
+				showLegend: showLegend,
+				legendPosition: legendPosition,
 			});
 			overlay.addTo(mymap);
 			break;
@@ -140,8 +157,8 @@ initMap = (
 				appId: owmAPI,
 				lang: lang,
 				unit: unit,
-				showLegend: true,//TODO Need Settable Option
-				legendPosition: 'bottomright',//TODO Need Settable Option
+				showLegend: showLegend,
+				legendPosition: legendPosition,
 			});
 			overlay.addTo(mymap);
 			break;
@@ -152,8 +169,8 @@ initMap = (
 				appId: owmAPI,
 				lang: lang,
 				unit: unit,
-				showLegend: true,//TODO Need Settable Option
-				legendPosition: 'bottomright',//TODO Need Settable Option
+				showLegend: showLegend,
+				legendPosition: legendPosition,
 			});
 			overlay.addTo(mymap);
 			break;
@@ -164,8 +181,8 @@ initMap = (
 				appId: owmAPI,
 				lang: lang,
 				unit: unit,
-				showLegend: true,//TODO Need Settable Option
-				legendPosition: 'bottomright',//TODO Need Settable Option
+				showLegend: showLegend,
+				legendPosition: legendPosition,
 			});
 			overlay.addTo(mymap);
 			break;
@@ -176,8 +193,8 @@ initMap = (
 				appId: owmAPI,
 				lang: lang,
 				unit: unit,
-				showLegend: true,//TODO Need Settable Option
-				legendPosition: 'bottomright',//TODO Need Settable Option
+				showLegend: showLegend,
+				legendPosition: legendPosition,
 			});
 			overlay.addTo(mymap);
 			break;
@@ -194,7 +211,7 @@ initMap = (
 			unit: unit,
 			iconSet: iconSet,
 			icons: icons,
-			overlayTemplate: 2,
+			overlayTemplate: cityTemplate,
 		});
 		// console.log(cities);
 

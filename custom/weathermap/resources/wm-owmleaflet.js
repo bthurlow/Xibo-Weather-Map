@@ -13,20 +13,19 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 2:59:23 pm
+ * Last Modified: Sunday, June 6th 2021, 1:01:29 pm
  * 
  * Modified By: Brian Thurlow
  * ___
  * Copyright (c) 2020 Brian Thurlow
  * ___
  */
-//TODO Needs reworked to support Maps v2 and custom images/icons
 /**
  * OWM Leaflet Extension
  *
  * @extends L.TileLayer
  */
- L.OWM = L.TileLayer.extend({
+L.OWM = L.TileLayer.extend({
     options: {
         appId: 'GET_YOUR_OWN_APPID', /* pass your own AppId as parameter when creating the layer. Get your own AppId at https://www.openweathermap.org/appid */
         // baseUrl: "https://{s}.tile.openweathermap.org/map/{layername}/{z}/{x}/{y}.png",
@@ -132,7 +131,7 @@
  * @extends L.OWM
  */
 L.OWM.Precipitation = L.OWM.extend({
-    _v1LayerName: 'precipitation',
+    _v1LayerName: 'precipitation_new',
     _v2LayerName: 'PA0'
 });
 /** 
@@ -144,9 +143,13 @@ L.OWM.Precipitation = L.OWM.extend({
 L.OWM.precipitation = (options) => {
     var layer = new L.OWM.Precipitation(options);
     layer.options.legendImagePath = null;
-    //TODO Imperial
-    layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Precipitation, mm</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>0.1</div><div>0.2</div><div>0.5</div><div>1</div><div>10</div><div>140</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to right, rgb(20 20 255 / 0%), rgb(148 184 235), rgb(135 207 127), rgb(244 218 163), rgb(234 147 141), rgb(190 171 161), rgb(239 227 218));"></div></div></div></div></div>';
-    //TODO V2 Legend
+    //V1 & V2 Legend are the same.
+    if (layer.options.unit === 'imperial') {
+        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Precipitation, in</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>0.1</div><div>0.2</div><div>0.3</div><div>0.4</div><div>0.5</div><div>5.5</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to right, rgba(225,200,100,0), rgba(200,150,150,0), rgba(150,150,170,0), rgba(120,120,190,0), rgba(110,110,205,0.3), rgba(80,80,225,0.7), rgba(20,20,255,0.9));"></div></div></div></div></div>';
+    } else {
+        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Precipitation, mm</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>0.1</div><div>0.2</div><div>0.5</div><div>1</div><div>10</div><div>140</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to right, rgba(225,200,100,0), rgba(200,150,150,0), rgba(150,150,170,0), rgba(120,120,190,0), rgba(110,110,205,0.3), rgba(80,80,225,0.7), rgba(20,20,255,0.9));"></div></div></div></div></div>';
+    }
+    //V2
     return layer;
 };
 
@@ -170,8 +173,11 @@ L.OWM.radar = (options) => {
     //NOTE V2 premium only!!
     var layer = new L.OWM.Radar(options);
     layer.options.legendImagePath = null;
-    //TODO Imperial
-    layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Precipitation, mm/h</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>0.5</div><div>1</div><div>2</div><div>4</div><div>6</div><div>7</div><div>10</div><div>12</div><div>14</div><div>16</div><div>24</div><div>32</div><div>60</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to left, rgb(170, 43, 195), rgb(255, 0, 146), rgb(255, 0, 100), rgb(255, 0, 0), rgb(255, 91, 0), rgb(255, 150, 0), rgb(255, 205, 0), rgb(239, 248, 0), rgb(0, 70, 0), rgb(0, 90, 0), rgb(0, 160, 0), rgb(0, 211, 0), rgb(0, 250, 100), rgba(0, 0, 0, 0));"></div></div></div></div></div>';
+    if (layer.options.unit === 'imperial') {
+        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Precipitation, in/h</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>0.02</div><div>0.04</div><div>0.08</div><div>0.2</div><div>0.25</div><div>0.3</div><div>0.4</div><div>0.5</div><div>0.6</div><div>0.7</div><div>1</div><div>1.25</div><div>2.5</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to left, rgb(170, 43, 195), rgb(255, 0, 146), rgb(255, 0, 100), rgb(255, 0, 0), rgb(255, 91, 0), rgb(255, 150, 0), rgb(255, 205, 0), rgb(239, 248, 0), rgb(0, 70, 0), rgb(0, 90, 0), rgb(0, 160, 0), rgb(0, 211, 0), rgb(0, 250, 100), rgba(0, 0, 0, 0));"></div></div></div></div></div>';
+    } else {
+        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Precipitation, mm/h</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>0.5</div><div>1</div><div>2</div><div>4</div><div>6</div><div>7</div><div>10</div><div>12</div><div>14</div><div>16</div><div>24</div><div>32</div><div>60</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to left, rgb(170, 43, 195), rgb(255, 0, 146), rgb(255, 0, 100), rgb(255, 0, 0), rgb(255, 91, 0), rgb(255, 150, 0), rgb(255, 205, 0), rgb(239, 248, 0), rgb(0, 70, 0), rgb(0, 90, 0), rgb(0, 160, 0), rgb(0, 211, 0), rgb(0, 250, 100), rgba(0, 0, 0, 0));"></div></div></div></div></div>';
+    }
     return layer;
 };
 
@@ -182,7 +188,7 @@ L.OWM.radar = (options) => {
  * @extends L.OWM
  */
 L.OWM.Pressure = L.OWM.extend({
-    _v1LayerName: 'pressure',
+    _v1LayerName: 'pressure_new',
     _v2LayerName: 'APM'
 });
 /** 
@@ -194,9 +200,8 @@ L.OWM.Pressure = L.OWM.extend({
 L.OWM.pressure = (options) => {
     var layer = new L.OWM.Pressure(options);
     layer.options.legendImagePath = null;
-    //TODO Imperial
-    //TODO V1 Legend
-    layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Pressure, hPa</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>950</div><div>980</div><div>1010</div><div>1040</div><div>1070</div></div><div class="horizontal-gradient-line" style="width: 260px; background-image: linear-gradient(to right, rgb(0, 115, 255) 0%, rgb(0, 170, 255) 8.35059%, rgb(75, 208, 214) 24.9192%, rgb(141, 231, 199) 41.4879%, rgb(176, 247, 32) 49.7722%, rgb(240, 184, 0) 58.0565%, rgb(251, 85, 21) 74.6251%, rgb(243, 54, 59) 91.1938%, rgb(198, 0, 0) 100%);"></div></div></div></div></div>';
+    //V1 & V2 Legend are the same.
+    layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Pressure, ' + (layer.options.unit === 'imperial' ? 'mb' : 'hPa') + '</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>950</div><div>980</div><div>1010</div><div>1040</div><div>1070</div></div><div class="horizontal-gradient-line" style="width: 260px; background-image: linear-gradient(to right, rgb(0, 115, 255) 0%, rgb(0, 170, 255) 8.35059%, rgb(75, 208, 214) 24.9192%, rgb(141, 231, 199) 41.4879%, rgb(176, 247, 32) 49.7722%, rgb(240, 184, 0) 58.0565%, rgb(251, 85, 21) 74.6251%, rgb(243, 54, 59) 91.1938%, rgb(198, 0, 0) 100%);"></div></div></div></div></div>';
     return layer;
 };
 //NOTE: Clouds
@@ -206,7 +211,7 @@ L.OWM.pressure = (options) => {
  * @extends L.OWM
  */
 L.OWM.Clouds = L.OWM.extend({
-    _v1LayerName: 'clouds',
+    _v1LayerName: 'clouds_new',
     _v2LayerName: 'CL'
 });
 /** 
@@ -218,13 +223,8 @@ L.OWM.Clouds = L.OWM.extend({
 L.OWM.clouds = (options) => {
     var layer = new L.OWM.Clouds(options);
     layer.options.legendImagePath = null;
-    if (layer.options.apiVersion === 1) {
-        //V1 Legend
-        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Clouds, %</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>20</div><div>50</div><div>80</div><div>100</div></div><div class="horizontal-gradient-line" style="width: 260px; background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(252, 251, 255, 0.2) 20%, rgba(247, 247, 255, 0.5) 50%, rgba(243, 242, 255, 1) 80%, rgb(200, 200, 183) 100%);"></div></div></div></div></div>';
-    } else {
-        //V2 Legend
-        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Clouds, %</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>25</div><div>50</div><div>75</div><div>100</div></div><div class="horizontal-gradient-line" style="width: 260px; background-image: linear-gradient(to right, rgba(247, 247, 255, 0) 0%, rgba(251, 247, 255, 0) 10%, rgba(244, 248, 255, 0.1) 20%, rgba(240, 249, 255, 0.2) 30%, rgba(221, 250, 255, 0.4) 40%, rgba(224, 224, 224, 0.9) 50%, rgba(224, 224, 224, 0.76) 60%, rgba(228, 228, 228, 0.9) 70%, rgba(232, 232, 232, 0.9) 80%, rgb(214, 213, 213) 90%, rgb(210, 210, 210) 95%, rgb(183, 183, 183) 100%);"></div></div></div></div></div>';
-    }
+    //V1 & V2 Legend are the same
+    layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Clouds, %</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>25</div><div>50</div><div>75</div><div>100</div></div><div class="horizontal-gradient-line" style="width: 260px; background-image: linear-gradient(to right, rgba(247, 247, 255, 0) 0%, rgba(251, 247, 255, 0) 10%, rgba(244, 248, 255, 0.1) 20%, rgba(240, 249, 255, 0.2) 30%, rgba(221, 250, 255, 0.4) 40%, rgba(224, 224, 224, 0.9) 50%, rgba(224, 224, 224, 0.76) 60%, rgba(228, 228, 228, 0.9) 70%, rgba(232, 232, 232, 0.9) 80%, rgb(214, 213, 213) 90%, rgb(210, 210, 210) 95%, rgb(183, 183, 183) 100%);"></div></div></div></div></div>';
     return layer;
 };
 
@@ -235,7 +235,7 @@ L.OWM.clouds = (options) => {
  * @extends L.OWM
  */
 L.OWM.Temperature = L.OWM.extend({
-    _v1LayerName: 'temp',
+    _v1LayerName: 'temp_new',
     _v2LayerName: 'TA2'
 });
 /** 
@@ -247,7 +247,7 @@ L.OWM.Temperature = L.OWM.extend({
 L.OWM.temperature = (options) => {
     var layer = new L.OWM.Temperature(options);
     layer.options.legendImagePath = null;
-    //TODO V1 Legend
+    // V1 & V2 Legend are the same.
     if (layer.options.unit === 'imperial') {
         layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Temperature, °F</div><div class="gradient-container" style="width: 260px;"><div class="scale-dividers"><div>-40</div><div>-4</div><div>32</div><div>68</div><div>104</div></div><div class="horizontal-gradient-line" style="background-image: linear-gradient(to right, rgb(159, 85, 181) 0%, rgb(44, 106, 187) 8.75%, rgb(82, 139, 213) 12.5%, rgb(103, 163, 222) 18.75%, rgb(142, 202, 240) 25%, rgb(155, 213, 244) 31.25%, rgb(172, 225, 253) 37.5%, rgb(194, 234, 255) 43.75%, rgb(255, 255, 208) 50%, rgb(254, 248, 174) 56.25%, rgb(254, 232, 146) 62.5%, rgb(254, 226, 112) 68.75%, rgb(253, 212, 97) 75%, rgb(244, 168, 94) 82.5%, rgb(244, 129, 89) 87.5%, rgb(244, 104, 89) 93.75%, rgb(244, 76, 73) 100%);"></div></div></div></div></div>';
     } else {
@@ -262,7 +262,7 @@ L.OWM.temperature = (options) => {
  * @extends L.OWM
  */
 L.OWM.WindSpeed = L.OWM.extend({
-    _v1LayerName: 'wind',
+    _v1LayerName: 'wind_new',
     _v2LayerName: 'WS10'
 });
 /** 
@@ -274,9 +274,12 @@ L.OWM.WindSpeed = L.OWM.extend({
 L.OWM.windspeed = (options) => {
     var layer = new L.OWM.WindSpeed(options);
     layer.options.legendImagePath = null;
-    //TODO Imperial
-    //TODO V1 Legend
-    layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Wind speed, m/s</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>2</div><div>3</div><div>6</div><div>12</div><div>25</div><div>50</div><div>100</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to left, rgb(158, 128, 177), rgba(116, 76, 172, 0.9), rgb(164, 123, 170), rgba(170, 128, 177, 0.84), rgba(176, 128, 177, 0.71), rgba(170, 128, 177, 0.54), rgba(170, 128, 177, 0.44), rgba(255, 255, 0, 0));"></div></div></div></div></div>';
+    //V1 & V2 legend the same
+    if (layer.options.unit === 'imperial') {
+        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Wind speed, mph</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>4</div><div>7</div><div>13</div><div>27</div><div>56</div><div>112</div><div>224</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to left, rgb(158, 128, 177), rgba(116, 76, 172, 0.9), rgb(164, 123, 170), rgba(170, 128, 177, 0.84), rgba(176, 128, 177, 0.71), rgba(170, 128, 177, 0.54), rgba(170, 128, 177, 0.44), rgba(255, 255, 0, 0));"></div></div></div></div></div>';
+    } else {
+        layer.options.legendElement = '<div class="leaflet-control-color-scale leaflet-control" style="display: block; background: none; box-shadow: none; border-width: 0px; margin-right: 10px; width: 360px; height: 27px;"><div class="leaflet-control-color-scale-line" style="background-image: none; position: relative; border-width: 0px; margin: 0px;"><div class="scale-details"><div>Wind speed, m/s</div><div class="gradient-container"><div class="scale-dividers " style="width: 260px;"><div>0</div><div>2</div><div>3</div><div>6</div><div>12</div><div>25</div><div>50</div><div>100</div></div><div class="horizontal-gradient-line" style="width: 260px; background: linear-gradient(to left, rgb(158, 128, 177), rgba(116, 76, 172, 0.9), rgb(164, 123, 170), rgba(170, 128, 177, 0.84), rgba(176, 128, 177, 0.71), rgba(170, 128, 177, 0.54), rgba(170, 128, 177, 0.44), rgba(255, 255, 0, 0));"></div></div></div></div></div>';
+    }
     return layer;
 };
 
@@ -410,15 +413,15 @@ L.OWM.Cities = L.Layer.extend({
         unit: 'metric', //available 'metric', 'imperial'
         iconSet: 'default',//Available Options 'default','amchartsAnimated','amchartsStatic'
         icons: [],
-        overlayTemplate: 1,//TODO Available 1,2,3...
+        overlayTemplate: 1,
     },
     initialize: function (options) {
         this.name = "Cities";
-        console.log('Cities initialize');
+        // console.log('Cities initialize');
         // console.log(this.options);
         // console.log(options);
         var newOpts = { ...this.options, ...options };
-        console.log(newOpts);
+        // console.log(newOpts);
         L.setOptions(this, newOpts);
         this._layer = L.layerGroup();
         this._timeoutId = null;
@@ -778,7 +781,7 @@ L.OWM.Cities = L.Layer.extend({
     //     return txt;
     // },
     _getOverlayTemplate: function (station, imageurl) {
-        console.log('_getOverlayTemplate');
+        // console.log('_getOverlayTemplate');
         var txt = '';
         switch (this.options.overlayTemplate) {
             case 1:
@@ -800,6 +803,38 @@ L.OWM.Cities = L.Layer.extend({
                     + '<div class="col-xs-8 details"><div class="temp">' + _temperatureConvert(station.main.temp, this.options.unit, this.options.temperatureDigits) + _displayTemperatureUnit(this.options.unit) + '</div><div class="description">'
                     + _i18n('id' + station.weather[0].id, station.weather[0].description + ' (' + station.weather[0].id + ')', this.options.lang)
                     + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 3:
+                txt += '<div class="owm-icondiv template3 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-5 iconContainer" style="padding:0;"><div class="icon" style="width:60px;"><img src="' + imageurl + '" border="0" width="60" height="60" /></div></div>'
+                    + '<div class="col-xs-7 details"><div class="city city-grad">' + station.name + '</div><div class="temp">' + _temperatureConvert(station.main.temp, this.options.unit, this.options.temperatureDigits) + _displayTemperatureUnit(this.options.unit) + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 4:
+                txt += '<div class="owm-icondiv template4 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-5 iconContainer" style="padding:0;"><div class="icon" style="width:60px;"><img src="' + imageurl + '" border="0" width="60" height="60" /></div></div>'
+                    + '<div class="col-xs-7 details"><div class="city city-grad">' + station.name + '</div><div class="temp">' + _temperatureConvert(station.main.temp, this.options.unit, this.options.temperatureDigits) + _displayTemperatureUnit(this.options.unit) + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 5:
+                txt += '<div class="owm-icondiv template5 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-2 iconContainer"><div class="icon" style="width:25px;"><img src="' + imageurl + '" border="0" width="25" height="25" /></div></div>'
+                    + '<div class="col-xs-10 details"><div class="city city-grad">' + station.name + '</div>'
+                    + '</div>';
+                txt += '</div>';
+                break;
+            case 6:
+                txt += '<div class="owm-icondiv template6 container">';
+                txt += '<div class="row">'
+                    + '<div class="col-xs-2 iconContainer"><div class="icon" style="width:25px;"><img src="' + imageurl + '" border="0" width="25" height="25" /></div></div>'
+                    + '<div class="col-xs-10 details"><div class="city city-grad">' + station.name + '</div>'
                     + '</div>';
                 txt += '</div>';
                 break;

@@ -2,9 +2,9 @@
 /*
  * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-form-edit.twig
  * 
- * File Overview: 
+ * File Overview: Weather Map Edit Form
  * 
- * Project: weathermap
+ * Project: xibo-weather-map
  * 
  * Project Path: c:\Projects\xibo-weather-map\custom\weathermap
  * 
@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 2:55:30 pm
+ * Last Modified: Sunday, June 6th 2021, 3:09:15 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -66,7 +66,10 @@
                         {{ forms.dropdown("enableStat", "single", title, module.getOption("enableStat", theme.getSetting("WIDGET_STATS_ENABLED_DEFAULT")), options, "id", "value", helpText) }}
                     </div>
                     <div class="tab-pane" id="mapConfigurationTab">
-                        {# //TODO Use Device Location #}
+                        {% set title %}{% trans "Use manual location?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to manually set the location. Uncheck to use the device location." %}{% endset %}
+                        {{ forms.checkbox("useDisplayLocation", title, module.getOption("useDisplayLocation", 0), helpText) }}
+
                         {% set title %}{% trans "Latitude" %}{% endset %}
                         {% set helpText %}{% trans "The Latitude for the maps center" %}{% endset %}
                         {{ forms.number("latitude", title, module.getOption("latitude"), helpText, "locationControls") }}
@@ -77,15 +80,19 @@
 
                         {% set title %}{% trans "Zoom" %}{% endset %}
                         {% set helpText %}{% trans "The map zoom level" %}{% endset %}
-                        {{ forms.number("zoom", title, module.getOption("zoom",10), helpText, "locationControls") }}
+                        {{ forms.number("zoom", title, module.getOption("zoom",10), helpText) }}
 
                         {% set title %}{% trans "Map Type" %}{% endset %}
                         {% set helpText %}{% trans "The map type to display" %}{% endset %}
                         {% set optStreet %}{% trans "Street" %}{% endset %}
                         {% set optSatillite %}{% trans "Satillite" %}{% endset %}
+                        {% set optLight %}{% trans "Light" %}{% endset %}
+                        {% set optDark %}{% trans "Dark" %}{% endset %}
                         {% set options = [
                             { id: "street", value: optStreet },
                             { id: "satillite", value: optSatillite },
+                            { id: "light", value: optLight },
+                            { id: "dark", value: optDark },
                         ] %}
                         {{ forms.dropdown("mapType", "single", title, module.getOption("mapType", "street"), options, "id", "value", helpText) }}
 
@@ -107,6 +114,24 @@
                             { id: "precipitation", value: optPrecipitation },
                         ] %}
                         {{ forms.dropdown("overlayType", "single", title, module.getOption("overlayType", "radar"), options, "id", "value", helpText) }}
+
+                        {% set title %}{% trans "Show overlay legend?" %}{% endset %}
+                        {% set helpText %}{% trans "Select to show the overlay legend" %}{% endset %}
+                        {{ forms.checkbox("showLegend", title, module.getOption("showLegend", true), helpText) }}
+
+                        {% set title %}{% trans "Legend Position" %}{% endset %}
+                        {% set helpText %}{% trans "Position of the legend on the screen" %}{% endset %}
+                        {% set optBtmLft %}{% trans "Bottom Left" %}{% endset %}
+                        {% set optBtmRgt %}{% trans "Bottom Right" %}{% endset %}
+                        {% set optTopLft %}{% trans "Top Left" %}{% endset %}
+                        {% set optTopRgt %}{% trans "Top Right" %}{% endset %}
+                        {% set options = [
+                            { id: "bottomleft", value: optBtmLft },
+                            { id: "bottomright", value: optBtmRgt },
+                            { id: "topleft", value: optTopLft },
+                            { id: "topright", value: optTopRgt },
+                        ] %}
+                        {{ forms.dropdown("legendPosition", "single", title, module.getOption("legendPosition", "bottomright"), options, "id", "value", helpText) }}
 
                         {% set title %}{% trans "Interactive Map?" %}{% endset %}
                         {% set helpText %}{% trans "Select to make this map interactive" %}{% endset %}
@@ -139,6 +164,16 @@
                             { id: "pt_br", value: optPT },
                         ] %}
                         {{ forms.dropdown("language", "single", title, module.getOption("language", "en"), options, "id", "value", helpText) }}
+
+                        {% set title %}{% trans "Units" %}{% endset %}
+                        {% set helpText %}{% trans "The map unit display" %}{% endset %}
+                        {% set optImperial %}{% trans "Imperial" %}{% endset %}
+                        {% set optMetric %}{% trans "Metric" %}{% endset %}
+                        {% set options = [
+                            { id: "imperial", value: optImperial },
+                            { id: "metric", value: optMetric },
+                        ] %}
+                        {{ forms.dropdown("units", "single", title, module.getOption("units", "imperial"), options, "id", "value", helpText) }}
                     </div>
                     <div class="tab-pane" id="pinConfigurationTab">
                         {% set title %}{% trans "Show Pin?" %}{% endset %}
@@ -189,17 +224,7 @@
                         {% set title %}{% trans "Show Cities?" %}{% endset %}
                         {% set helpText %}{% trans "Select to show near by cities on the map.  This will result in an additional api call to OpenWeatherMaps." %}{% endset %}
                         {{ forms.checkbox("showCities", title, module.getOption("showCities", false), helpText) }}
-
-                        {% set title %}{% trans "Units" %}{% endset %}
-                        {% set helpText %}{% trans "The map unit display" %}{% endset %}
-                        {% set optImperial %}{% trans "Imperial" %}{% endset %}
-                        {% set optMetric %}{% trans "Metric" %}{% endset %}
-                        {% set options = [
-                            { id: "imperial", value: optImperial },
-                            { id: "metric", value: optMetric },
-                        ] %}
-                        {{ forms.dropdown("units", "single", title, module.getOption("units", "imperial"), options, "id", "value", helpText, "cityControls") }}
-
+                        
                         {% set title %}{% trans "Icon Set" %}{% endset %}
                         {% set helpText %}{% trans "The icon set to use" %}{% endset %}
                         {% set optDefault %}{% trans "Default" %}{% endset %}
@@ -211,6 +236,32 @@
                             { id: "amchartsStatic", value: optAMCStat },
                         ] %}
                         {{ forms.dropdown("iconSet", "single", title, module.getOption("iconSet", "default"), options, "id", "value", helpText, "cityControls") }}
+                        <div class="form-group cityControls">
+                            <div class="col-sm-2 control-label"></div>
+                            <div id="iconSetDisplay" class="col-sm-10"></div>
+                        </div>
+
+                        {% set title %}{% trans "Template" %}{% endset %}
+                        {% set helpText %}{% trans "The template to use" %}{% endset %}
+                        {% set optLgDk %}{% trans "Large - Dark" %}{% endset %}
+                        {% set optLgLt %}{% trans "Large - Light" %}{% endset %}
+                        {% set optMdDk %}{% trans "Medium - Dark" %}{% endset %}
+                        {% set optMdLt %}{% trans "Medium - Light" %}{% endset %}
+                        {% set optSmDk %}{% trans "Small - Dark" %}{% endset %}
+                        {% set optSmLt %}{% trans "Small - Light" %}{% endset %}
+                        {% set options = [
+                            { id: 1, value: optLgDk },
+                            { id: 2, value: optLgLt },
+                            { id: 3, value: optMdLt },
+                            { id: 4, value: optMdDk },
+                            { id: 5, value: optSmLt },
+                            { id: 6, value: optSmDk },
+                        ] %}
+                        {{ forms.dropdown("cityTemplate", "single", title, module.getOption("cityTemplate", 6), options, "id", "value", helpText, "cityControls") }}
+                        <div class="form-group cityControls">
+                            <div class="col-sm-2 control-label"></div>
+                            <div id="cityTemplateDisplay" class="col-sm-10"></div>
+                        </div>
                     </div>
                     <div class="tab-pane" id="cacheTab">
                         {% set title %}{% trans "Update Interval (mins)" %}{% endset %}

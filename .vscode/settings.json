@@ -8,8 +8,8 @@
     "**/coverage": true,
     "**/lib-amd": true,
     "src/**/*.scss.ts": true,
-    "**/build":true,
-    "**/node_modules":true
+    "**/build": true,
+    "**/node_modules": true
   },
   "typescript.tsdk": ".\\node_modules\\typescript\\lib",
   "psi-header.config": {
@@ -29,7 +29,13 @@
     ],
     "excludeGlob": [],
     "autoHeader": "manualSave",
-    "replace": ["filepath","projectpath","modAuthor","modDate","projectname"]
+    "replace": [
+      "filepath",
+      "projectpath",
+      "modAuthor",
+      "modDate",
+      "projectname"
+    ]
   },
   "psi-header.license-text": [
     "This code may not be used for any reason without the permission of Brian Thurlow"
@@ -47,7 +53,10 @@
       "authoremail",
       "bthurlow@m2econ.com"
     ],
-    ["initials","BT"]
+    [
+      "initials",
+      "BT"
+    ]
   ],
   "psi-header.lang-config": [
     {
@@ -108,8 +117,8 @@
       "type": "line",
       "foreground": "#FF8C00",
       "iconColour": "#FF8C00",
-      "background":"#FFC680",
-      "opacity":30
+      "background": "#FFC680",
+      "opacity": 30
     },
     "LATER": {
       "icon": "clock",
@@ -122,8 +131,8 @@
       "type": "line",
       "foreground": "#F44336",
       "iconColour": "#F44336",
-      "background":"#FAA19B",
-      "opacity":30
+      "background": "#FAA19B",
+      "opacity": 30
     },
     "QUESTION": {
       "icon": "question",
@@ -148,7 +157,7 @@
       "type": "line",
       "foreground": "#9B00FF",
       "background": "#270040",
-      "opacity":80,
+      "opacity": 80,
       "iconColour": "#9B00FF",
       "hideFromTree": true
     },
@@ -157,7 +166,7 @@
       "type": "line",
       "foreground": "#9B00FF",
       "background": "#270040",
-      "opacity":80,
+      "opacity": 80,
       "iconColour": "#9B00FF",
       "hideFromTree": true
     }
@@ -173,7 +182,10 @@
     "#region",
     "#endregion"
   ],
-  "todo-tree.filtering.excludeGlobs": ["**/node-modules/*","**/.vscode/*"],
+  "todo-tree.filtering.excludeGlobs": [
+    "**/node-modules/*",
+    "**/.vscode/*"
+  ],
   // "todo-tree.regex.regex": "((//|#|<!--|;|/\\*|^)\\s*($TAGS)|^\\s*- \\[ \\])",
   // "todo-tree.regex.regex": "(^(.*//|#|<!--|;|/*|/\\**).*($TAGS)|\\n^(.*//|#|--!>|.*\\*/|.*\\*)*(.*\\S)$)",
   // "todo-tree.regex.regex": "(.*/|#|<!--|;|\\*|\\**).*($TAGS)|\\n^(.*/|#|--!>|.*\\\\*/|.*\\\\*)*(.*\\S)",
@@ -181,4 +193,23 @@
   // "todo-tree.regex.regexCaseSensitive": false
   // "scssFormatter.tabWidth": Number of spaces per indentation-level.
   // "scssFormatter.singleQuote": Use single quotes instead of double quotes.
+  "fsdeploy.nodes": [
+    {
+      "source": "./custom/",
+      "target": "C:\\XiboDev\\xibo-docker-2.3.3\\shared\\cms\\custom",
+      "include":"**/*.*",
+    },
+    {
+      "source": "./custom/weathermap/",
+      "target": "C:\\XiboDev\\xibo-docker-2.3.3\\shared\\cms\\library",
+      "include":"*.*",
+      "exclude": "{**/resources/*.*,*.twig}"
+    },
+    {
+      "source": "./custom/weathermap/resources",
+      "target": "C:\\XiboDev\\xibo-docker-2.3.3\\shared\\cms\\library",
+      "include":"*.*",
+    }
+  ],
+  "fsdeploy.deployOnSave": true
 }

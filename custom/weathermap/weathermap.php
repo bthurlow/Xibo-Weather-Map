@@ -2,7 +2,7 @@
 /*
  * File: c:\Projects\xibo-weather-map\custom\weather-map\weather-map.php
  * 
- * File Overview: 
+ * File Overview: Weather Map Module Main
  * 
  * Project: weather-map
  * 
@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Wednesday, June 2nd 2021, 4:07:17 pm
+ * Last Modified: Sunday, June 6th 2021, 2:59:51 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -103,6 +103,11 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 			/* @var Media $media */
 			$media->save();
 		}
+		//Install Extra files
+		foreach ($this->mediaFactory->createModuleFileFromFolder($this->resourceFolder . '/template-images') as $media) {
+			/* @var Media $media */
+			$media->save();
+		}
 	}
 	/**
 	 * Form for updating the module settings
@@ -168,7 +173,6 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 		if ($this->getOption('zoom') == '' || $this->getOption('zoom') < 0 || $this->getOption('zoom') > 18) {
 			throw new \InvalidArgumentException(__('Zoom should be between 0 and 18'));
 		}
-		// TODO More validation
 	}
 
 	//Not needed for xibo v2
@@ -216,6 +220,8 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 		$this->setOption('isInteractive', $sanitizedParams->getCheckbox('isInteractive'));
 		$this->setOption('showZoom', $sanitizedParams->getCheckbox('showZoom'));
 		$this->setOption('overlayType', $sanitizedParams->getString('overlayType'));
+		$this->setOption('showLegend', $sanitizedParams->getCheckbox('showLegend'));
+		$this->setOption('legendPosition', $sanitizedParams->getString('legendPosition'));
 
 		//Pin Options
 		$this->setOption('showPin', $sanitizedParams->getCheckbox('showPin'));
@@ -239,6 +245,7 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 		$this->setOption('showCities', $sanitizedParams->getCheckbox('showCities'));
 		$this->setOption('units', $sanitizedParams->getString('units'));
 		$this->setOption('iconSet', $sanitizedParams->getString('iconSet'));
+		$this->setOption('cityTemplate', $sanitizedParams->getInt('cityTemplate'));
 	}
 
 	/**
@@ -264,6 +271,33 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 	 */
 	public function getResource($displayId = 0)
 	{
+		// Get the Lat/Long
+		$defaultLat = $this->getConfig()->getSetting('DEFAULT_LAT');
+		$defaultLong = $this->getConfig()->getSetting('DEFAULT_LONG');
+
+		//Device Location
+		if ($this->getOption('useDisplayLocation') == 0) {
+			// Use the display ID or the default.
+			if ($displayId != 0) {
+
+				$display = $this->displayFactory->getById($displayId);
+
+				if (
+					$display->latitude != '' && $display->longitude != ''
+					&& v::latitude()->validate($display->latitude)
+					&& v::longitude()->validate($display->longitude)
+				) {
+					$defaultLat = $display->latitude;
+					$defaultLong = $display->longitude;
+				} else {
+					$this->getLog()->info('Warning, display ' .  $display->display . ' does not have a lat/long or they are invalid!');
+				}
+			}
+		} else {
+			$defaultLat = $this->getOption('latitude', 35.670962);
+			$defaultLong = $this->getOption('longitude', -88.852231);
+		}
+
 		// Load in the template
 		$data = [];
 
@@ -333,14 +367,14 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				'" . $this->getSetting('mbApiKey', '') . "', //MapBox Key
 				'" . $this->getSetting('gmApiKey', '') . "', //Google Maps Key
 				'" . $containerId . "', //Map Element
-				" . $this->getOption('latitude', 35.670962) . ", //Map Center Lat
-				" . $this->getOption('longitude', -88.852231) . ", //Map Center Long
+				" . $defaultLat . ", //Map Center Lat
+				" . $defaultLong . ", //Map Center Long
 				" . $this->getOption('zoom', 10) . ", //Zoom
-				'" . $this->getOption('mapType', "street") . "',
-				'" . $this->getOption('overlayType', "precipitation") . "',
-				" . $this->getOption('isInteractive', false) . ",
-				" . $this->getOption('showZoom', false) . ",
-				'" . $this->getOption('language', "en") . "',
+				'" . $this->getOption('mapType', "street") . "', //Map Type
+				'" . $this->getOption('overlayType', "precipitation") . "', //Weather Overlay Type
+				" . $this->getOption('isInteractive', false) . ", //Make map interactive
+				" . $this->getOption('showZoom', false) . ", //Show the zoom controls
+				'" . $this->getOption('language', "en") . "', 
 				'" . $this->getOption('units', 'imperial') . "',
 				'" . $this->getOption('iconSet', 'default') . "',
 				" . json_encode($icons) . ",
@@ -354,6 +388,9 @@ class weathermap extends \Xibo\Widget\ModuleWidget
 				" . $this->getOption('pinShadowWidth', 41) . ",
 				" . $this->getOption('pinShadowHeight', 41) . ",
 				" . $this->getOption('showCities', false) . ",
+				" . $this->getOption('showLegend', false) . ", // Show Overlay Legend
+				'" . $this->getOption('legendPosition', 'bottomright') . "', // Overlay Legend Position
+				" . $this->getOption('cityTemplate', 6) . ",//City Template
 			);
 		});
 		</script>";

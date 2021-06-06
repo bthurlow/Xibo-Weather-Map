@@ -2,7 +2,7 @@
 /*
  * File: c:\Projects\xibo-weather-map\custom\weathermap\weathermap-designer.javascript.twig
  * 
- * File Overview: 
+ * File Overview: Weather Map Designer Twig
  * 
  * Project: weathermap
  * 
@@ -12,7 +12,7 @@
  * 
  * Author: Brian Thurlow
  * ___
- * Last Modified: Thursday, May 14th 2020, 5:37:52 am
+ * Last Modified: Sunday, June 6th 2021, 3:16:11 pm
  * 
  * Modified By: Brian Thurlow
  * ___
@@ -28,6 +28,83 @@
 </style>
 
 <script type="text/javascript">
+    function getIconSet(){
+        var d = $("#iconSetDisplay"),v=$("#iconSet").val();
+        //console.log(v);
+            switch (v) {
+                case 'amchartsAnimated':
+                    d.html('<img src="/library/download/wm-amc-ani-day.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-night.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-cloudy-day-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-cloudy-night-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-cloudy-day-3.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-cloudy-night-3.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-rainy-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-rainy-6.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-cloudy.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-thunder.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-snowy-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-snowy-5.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-rainy-2.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-ani-rainy-4.svg?preview=1" border="0" width="40" height="40" />');
+                    break;
+                case 'amchartsStatic':
+                    d.html('<img src="/library/download/wm-amc-sta-day.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-night.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-cloudy-day-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-cloudy-night-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-cloudy-day-3.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-cloudy-night-3.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-rainy-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-rainy-6.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-cloudy.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-thunder.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-snowy-1.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-snowy-5.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-rainy-2.svg?preview=1" border="0" width="40" height="40" />' +
+                    '<img src="/library/download/wm-amc-sta-rainy-4.svg?preview=1" border="0" width="40" height="40" />');
+                    break;
+                default:
+                    d.html('<img src="https://openweathermap.org/img/w/01d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/01n.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/02d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/02n.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/03d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/04d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/09d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/10d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/10n.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/11d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/13d.png" border="0" width="40" height="40" />' +
+                    '<img src="https://openweathermap.org/img/w/50d.png" border="0" width="40" height="40" />');
+                    break;
+            }
+    }
+    function getCityTemplate(){
+        var d = $("#cityTemplateDisplay"),v=$("#cityTemplate").val();
+        //console.log(v);
+            d.html('');
+            switch (v) {
+                case '1':
+                    d.html('<img src="/library/download/wm-template-lgdk.jpg?preview=1" border="0" />');
+                    break;
+                case '2':
+                    d.html('<img src="/library/download/wm-template-lglt.jpg?preview=1" border="0" />');
+                    break;
+                case '3':
+                    d.html('<img src="/library/download/wm-template-mdlt.jpg?preview=1" border="0" />');
+                    break;
+                case '4':
+                    d.html('<img src="/library/download/wm-template-mddk.jpg?preview=1" border="0" />');
+                    break;
+                case '5':
+                    d.html('<img src="/library/download/wm-template-smlt.jpg?preview=1" border="0" />');
+                    break;
+                default: //6
+                    d.html('<img src="/library/download/wm-template-smdk.jpg?preview=1" border="0" />');
+                    break;
+            }
+    }
     // Runs after edit form opens
     function weathermap_form_edit_open() {
         // Set duration field, using the helper ()
@@ -36,6 +113,25 @@
         formHelpers.setupCheckboxInputFields($(this).find('form'), '#useMapLatLong', '', '.pinLocationControls');
         formHelpers.setupCheckboxInputFields($(this).find('form'), '#usePinDefault', '', '.pinImage');
         formHelpers.setupCheckboxInputFields($(this).find('form'), '#showCities', '.cityControls');
+        formHelpers.setupCheckboxInputFields($(this).find('form'), '#useDisplayLocation', '.locationControls');
+
+        $(this).ready(()=>{
+            //console.log('Ready Event');
+            getIconSet();
+            getCityTemplate();
+        });
+
+        $(this).find('#iconSet').on('change', function (e) {
+            //console.log('iconSet change');
+            //console.log($("#iconSet").val());
+            getIconSet();
+        });
+
+        $(this).find('#cityTemplate').on('change', function (e) {
+            //console.log('cityTemplate change');
+            //console.log($("#cityTemplate").val());
+            getCityTemplate();
+        });
     }
 
     // Runs before form submit
