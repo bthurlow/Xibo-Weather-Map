@@ -203,7 +203,7 @@
       "source": "./custom/weathermap/",
       "target": "C:\\XiboDev\\xibo-docker-2.3.3\\shared\\cms\\library",
       "include":"*.*",
-      "exclude": "**/resources/*.*"
+      "exclude": "{**/resources/*.*,*.twig}"
     },
     {
       "source": "./custom/weathermap/resources",
